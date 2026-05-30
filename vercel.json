@@ -13,11 +13,7 @@
     },
     {
       "src": "/(.*)",
-      "action": "filesystem"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "index.html"
+      "dest": "/$1"
     }
   ]
 }
