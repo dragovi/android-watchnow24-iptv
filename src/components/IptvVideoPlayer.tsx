@@ -67,24 +67,23 @@ export default function IptvVideoPlayer({
     setBuffering(true);
     let hlsInstance: Hls | null = null;
     
-    // Detect if we are on Android to bypass the local /api proxy
-    const isAndroid = /android/i.test(navigator.userAgent);
+    // API Base detection for Android
+    const API_BASE = window.location.hostname === "localhost" ? "" : "https://android-watchnow24-iptv-obc9c4mvf-dragovics-projects-617f1d15.vercel.app";
 
-    // On Android, use direct URL because the local proxy doesn't exist
-    // On Web, use proxy to bypass CORS
-    const proxiedChannelUrl = isAndroid
-      ? channel.url
-      : (channel.url.startsWith("http") ? `/api/iptv/proxy?url=${encodeURIComponent(channel.url)}` : channel.url);
+    // Always proxy URLs to bypass mixed block and CORS
+    const proxiedChannelUrl = channel.url.startsWith("http")
+      ? `${API_BASE}/api/iptv/proxy?url=${encodeURIComponent(channel.url)}`
+      : channel.url;
 
     if (Hls.isSupported() && channel.url.toLowerCase().includes(".m3u8")) {
       hlsInstance = new Hls({
         maxBufferLength: preferences.bufferSizeMs / 1000,
         enableWorker: true,
         lowLatencyMode: true,
-        // Intercept all HLS requests to the proxy to avoid CORS/Mixed content on segments (Only on web)
+        // Intercept all HLS requests to the proxy to avoid CORS/Mixed content on segments
         xhrSetup: function(xhr: any, url: string) {
-          if (!isAndroid && url.startsWith("http") && !url.includes("/api/iptv/proxy")) {
-            xhr.open("GET", `/api/iptv/proxy?url=${encodeURIComponent(url)}`, true);
+          if (url.startsWith("http") && !url.includes("/api/iptv/proxy")) {
+            xhr.open("GET", `${API_BASE}/api/iptv/proxy?url=${encodeURIComponent(url)}`, true);
           }
         }
       });

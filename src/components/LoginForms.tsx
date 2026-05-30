@@ -111,12 +111,14 @@ export default function LoginForms({ onLoginSuccess }: LoginFormsProps) {
         // Succesfully load demo channels under Xtream branding
         onLoginSuccess([], "demo", { serverUrl: normalizedServerUrl, username, password });
       } else {
+        // API Base detection for Android
+        const API_BASE = window.location.hostname === "localhost" ? "" : "https://android-watchnow24-iptv-obc9c4mvf-dragovics-projects-617f1d15.vercel.app";
+
         // Initiate active connection fetch loop proxy
         const checkUrl = `${normalizedServerUrl}/player_api.php?username=${username}&password=${password}`;
 
-        // Fix: Detect if we are on Android to bypass the local /api proxy which doesn't exist on device
-        const isAndroid = /android/i.test(navigator.userAgent);
-        const requestUrl = isAndroid ? checkUrl : `/api/iptv/proxy?url=${encodeURIComponent(checkUrl)}`;
+        // Fix: Use the Vercel proxy even on Android to avoid CORS issues with IPTV providers
+        const requestUrl = `${API_BASE}/api/iptv/proxy?url=${encodeURIComponent(checkUrl)}`;
 
         const response = await fetch(requestUrl);
         const data = await response.json();
@@ -124,9 +126,9 @@ export default function LoginForms({ onLoginSuccess }: LoginFormsProps) {
         if (data && data.user_info) {
           setErrorMsg("Success! API Connection verified. Syncing collections...");
 
-          // Helper to fetch either directly or via proxy
+          // Helper to fetch via proxy
           const smartFetch = async (url: string) => {
-            const finalUrl = isAndroid ? url : `/api/iptv/proxy?url=${encodeURIComponent(url)}`;
+            const finalUrl = `${API_BASE}/api/iptv/proxy?url=${encodeURIComponent(url)}`;
             return fetch(finalUrl);
           };
 
