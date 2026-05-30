@@ -86,9 +86,11 @@ app.get("/api/iptv/proxy", async (req, res) => {
     const options: any = {
       method: "GET",
       headers: {
-        "User-Agent": "VLC/3.0.16 LibVLC/3.0.16", // Many IPTV providers block standard browser UA
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
         "Accept": "*/*",
-      }
+        "Connection": "keep-alive"
+      },
+      timeout: 15000 // Augmentation du timeout pour les serveurs lents
     };
 
     if (req.headers.range) {

@@ -89,19 +89,9 @@ export default function LoginForms({ onLoginSuccess }: LoginFormsProps) {
 
     setIsSubmitting(true);
     try {
-      // Ensure the URL has a port if it's missing (defaulting to 80 for http)
       let normalizedServerUrl = serverUrl.trim();
-      try {
-        const urlObj = new URL(normalizedServerUrl);
-        if (!urlObj.port) {
-          // If no port is specified, explicitly add :80 for http or :443 for https if needed
-          // but many Xtream servers expect a port or work on 80.
-          if (urlObj.protocol === "http:") {
-            normalizedServerUrl = `${urlObj.protocol}//${urlObj.hostname}:80`;
-          }
-        }
-      } catch (e) {
-        console.warn("URL parsing for normalization failed", e);
+      if (normalizedServerUrl.endsWith("/")) {
+        normalizedServerUrl = normalizedServerUrl.slice(0, -1);
       }
 
       // Real endpoint construction checking
