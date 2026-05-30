@@ -11,7 +11,26 @@ dotenv.config();
 const app = express();
 const PORT = 3000;
 
+// Middleware CORS manuel pour autoriser l'APK Android et le Web
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization, Range");
+  res.header("Access-Control-Expose-Headers", "Content-Length, Content-Range, Accept-Ranges");
+
+  // Répondre immédiatement aux requêtes de pré-vérification (OPTIONS)
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  }
+  next();
+});
+
 app.use(express.json());
+
+// Route de santé pour vérifier si le serveur répond
+app.get("/api/health", (req, res) => {
+  res.status(200).json({ status: "ok", message: "WATCHNOW24 Server is online" });
+});
 
 // API route for Gemini AI Assistant
 app.post("/api/ai/chat", async (req, res) => {
@@ -88,7 +107,8 @@ app.get("/api/iptv/proxy", async (req, res) => {
       if (proxyRes.headers["content-range"]) headersToForward["Content-Range"] = proxyRes.headers["content-range"];
       if (proxyRes.headers["accept-ranges"]) headersToForward["Accept-Ranges"] = proxyRes.headers["accept-ranges"];
 
-      res.writeHead(proxyRes.statusCode || 200, headersToForward);
+      res.status(proxyRes.statusCode || 200);
+      res.set(headersToForward);
       proxyRes.pipe(res);
     });
 

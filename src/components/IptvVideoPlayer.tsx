@@ -67,8 +67,8 @@ export default function IptvVideoPlayer({
     setBuffering(true);
     let hlsInstance: Hls | null = null;
     
-    // API Base detection for Android
-    const API_BASE = window.location.hostname === "localhost" ? "" : "https://android-watchnow24-iptv-obc9c4mvf-dragovics-projects-617f1d15.vercel.app";
+    // API Base detection
+    const API_BASE = window.location.hostname.includes("vercel.app") ? "" : "https://android-watchnow24-iptv.vercel.app";
 
     // Always proxy URLs to bypass mixed block and CORS
     const proxiedChannelUrl = channel.url.startsWith("http")

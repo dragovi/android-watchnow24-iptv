@@ -31,7 +31,7 @@ export default function AiAssistant() {
     setIsLoading(true);
 
     try {
-      const API_BASE = window.location.hostname === "localhost" ? "" : "https://android-watchnow24-iptv-obc9c4mvf-dragovics-projects-617f1d15.vercel.app";
+      const API_BASE = window.location.hostname.includes("vercel.app") ? "" : "https://android-watchnow24-iptv.vercel.app";
 
       const response = await fetch(`${API_BASE}/api/ai/chat`, {
         method: "POST",

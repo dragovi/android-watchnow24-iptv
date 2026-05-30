@@ -111,8 +111,8 @@ export default function LoginForms({ onLoginSuccess }: LoginFormsProps) {
         // Succesfully load demo channels under Xtream branding
         onLoginSuccess([], "demo", { serverUrl: normalizedServerUrl, username, password });
       } else {
-        // API Base detection for Android
-        const API_BASE = window.location.hostname === "localhost" ? "" : "https://android-watchnow24-iptv-obc9c4mvf-dragovics-projects-617f1d15.vercel.app";
+        // API Base detection
+        const API_BASE = window.location.hostname.includes("vercel.app") ? "" : "https://android-watchnow24-iptv.vercel.app";
 
         // Initiate active connection fetch loop proxy
         const checkUrl = `${normalizedServerUrl}/player_api.php?username=${username}&password=${password}`;
@@ -318,7 +318,10 @@ export default function LoginForms({ onLoginSuccess }: LoginFormsProps) {
     setErrorMsg("");
 
     try {
-      const proxiedUrl = `/api/iptv/proxy?url=${encodeURIComponent(m3uUrl)}`;
+      // API Base detection
+      const API_BASE = window.location.hostname.includes("vercel.app") ? "" : "https://android-watchnow24-iptv.vercel.app";
+
+      const proxiedUrl = `${API_BASE}/api/iptv/proxy?url=${encodeURIComponent(m3uUrl)}`;
       const response = await fetch(proxiedUrl);
       const playlistText = await response.text();
 

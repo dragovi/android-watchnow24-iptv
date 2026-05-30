@@ -53,6 +53,9 @@ export default function SpeedTestSection() {
 
     const sDetails = getServerDetails(selectedServer);
 
+    // API Base detection
+    const API_BASE = window.location.hostname.includes("vercel.app") ? "" : "https://android-watchnow24-iptv.vercel.app";
+
     // Phase 1: Real Ping & Jitter Analysis
     const pings: number[] = [];
     const iterations = 5;
@@ -60,7 +63,7 @@ export default function SpeedTestSection() {
     for (let i = 0; i < iterations; i++) {
       const startTime = performance.now();
       try {
-        await fetch("/api/health", { cache: "no-store" });
+        await fetch(`${API_BASE}/api/health`, { cache: "no-store" });
         const endTime = performance.now();
         // Combine real network metrics with server base latency offsets
         const netDuration = endTime - startTime;
@@ -102,7 +105,7 @@ export default function SpeedTestSection() {
     const speedSamples: number[] = [];
 
     try {
-      const response = await fetch("/api/speedtest/download", { signal, cache: "no-store" });
+      const response = await fetch(`${API_BASE}/api/speedtest/download`, { signal, cache: "no-store" });
       if (!response.body) throw new Error("Writable stream unreadable");
 
       const reader = response.body.getReader();

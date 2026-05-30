@@ -16,10 +16,10 @@ import VirtualTvRemote from "./components/VirtualTvRemote";
 import AiAssistant from "./components/AiAssistant";
 import { Tv, Play, Search, Heart, History, Sparkles, Sliders, Shield, AlertTriangle, Monitor, Calendar, Check, Info, Radio, Star, ChevronRight, Lock, Key } from "lucide-react";
 
-// Configuration de l'API Base URL pour Android (Vercel)
-const API_BASE_URL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+// Configuration de l'API Base URL
+const API_BASE_URL = window.location.hostname.includes("vercel.app")
   ? ""
-  : "https://android-watchnow24-iptv-obc9c4mvf-dragovics-projects-617f1d15.vercel.app";
+  : "https://android-watchnow24-iptv.vercel.app";
 
 export default function App() {
   // 1. Splash Screen countdown loader
