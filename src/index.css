@@ -1,0 +1,128 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Inter", "Space Grotesk", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --color-burgundy-50: #fdf2f4;
+  --color-burgundy-100: #fbe5ea;
+  --color-burgundy-200: #f7ced7;
+  --color-burgundy-300: #f1a9b9;
+  --color-burgundy-400: #e87b94;
+  --color-burgundy-500: #d94d6e;
+  --color-burgundy-600: #c22f51;
+  --color-burgundy-700: #a31f3c;
+  --color-burgundy-800: #871c35;
+  --color-burgundy-900: #711b30;
+  --color-burgundy-950: #3f0916;
+}
+
+/* Base custom definitions from Sleek Interface Theme */
+body {
+  margin: 0;
+  background-color: #0A0A0A;
+  color: #FFFFFF;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.gold-text {
+  color: #D4AF37;
+}
+
+.burgundy-accent {
+  background: linear-gradient(135deg, #71091a 0%, #e50914 100%);
+}
+
+.burgundy-glow {
+  box-shadow: 0 0 25px rgba(229, 9, 20, 0.4);
+}
+
+.active-nav {
+  border-left: 4px solid #e50914;
+  background: linear-gradient(90deg, rgba(229, 9, 20, 0.15) 0%, transparent 100%);
+}
+
+.logo-glow {
+  filter: drop-shadow(0 0 10px rgba(229, 9, 20, 0.6));
+}
+
+.glossy-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.glossy-card::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 0%,
+    transparent 40%,
+    rgba(255, 255, 255, 0.05) 45%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.05) 55%,
+    transparent 60%,
+    transparent 100%
+  );
+  transform: rotate(25deg);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+.glossy-card:hover::after {
+  left: 100%;
+  top: 100%;
+}
+
+.premium-border {
+  border: 1px solid rgba(229, 9, 20, 0.1);
+  transition: all 0.3s ease;
+}
+
+.premium-border:hover {
+  border-color: rgba(229, 9, 20, 0.5);
+  box-shadow: 0 0 15px rgba(229, 9, 20, 0.2);
+}
+
+@keyframes pulse-glow {
+  0% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.05); opacity: 1; filter: drop-shadow(0 0 15px rgba(229, 9, 20, 0.8)); }
+  100% { transform: scale(1); opacity: 0.8; }
+}
+
+.animate-logo-pulse {
+  animation: pulse-glow 3s infinite ease-in-out;
+}
+
+/* Hide scrollbars globally for consistent premium fluid interface */
+::-webkit-scrollbar {
+  display: none !important;
+}
+
+* {
+  scrollbar-width: none !important;
+}
+
+/* Focus and active highlight states for TV remote D-Pad navigation */
+.tv-focusable {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: 2px solid transparent;
+}
+.tv-focusable:focus {
+  transform: scale(1.03);
+  outline: 2px solid #E50914;
+  box-shadow: 0 0 15px rgba(229, 9, 20, 0.5);
+  background-color: rgba(128, 0, 32, 0.2);
+}
+
+

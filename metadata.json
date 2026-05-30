@@ -1,0 +1,6 @@
+{
+  "name": "WATCHNOW24 IPTV",
+  "description": "Premium IPTV client featuring Live TV, VOD, Series, Catch-up, EPG timeline, connection tester, dynamic local-cache parsing, and custom theme layouts.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,14 @@
+{
+  "appId": "com.watchnow24.iptv",
+  "appName": "WatchNow24",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https",
+    "cleartext": true
+  },
+  "android": {
+    "allowMixedContent": true,
+    "captureInput": true
+  }
+}
